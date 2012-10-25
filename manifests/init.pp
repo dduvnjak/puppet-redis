@@ -11,14 +11,18 @@
 # [*bind_local*]
 #  Listen on localhost only. Default: true
 #
-# [*slaveof*]
+# [*slave_of*]
 #  Enable replication from master. Default: false
+#
+# [*slave_priority*]
+#  Slave priority. Default: 100
 #
 # === Examples
 #
 # class { 'redis':
-#   bind_local => false,
-#   slaveof    => 'redismaster01.example.com',
+#   bind_local     => false,
+#   slave_of       => 'redismaster01.example.com',
+#   slave_priority => '200',
 # }
 #
 # === Authors
@@ -26,8 +30,9 @@
 # Sergey Stankevich
 #
 class redis (
-  $bind_local = true,
-  $slaveof    = false
+  $bind_local     = true,
+  $slave_of       = false,
+  $slave_priority = '100'
 ) {
 
   # Compatibility check
