@@ -9,7 +9,7 @@
 # === Parameters
 #
 # [*bind_local*]
-#  Listen on localhost only. Default: true
+#  Listen on localhost only. Default: false
 #
 # [*slave_of*]
 #  Enable replication from master. Default: false
@@ -30,7 +30,7 @@
 # Sergey Stankevich
 #
 class redis (
-  $bind_local     = true,
+  $bind_local     = false,
   $slave_of       = false,
   $slave_priority = '100'
 ) {

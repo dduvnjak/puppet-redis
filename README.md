@@ -9,7 +9,7 @@ Puppet module for installing and managing Redis.
 
 Installs and manages Redis.
 
-**bind_local** — Listen on localhost only. Default: true
+**bind_local** — Listen on localhost only. Default: false
 
 **slave_of** — Enable replication from master. Default: false
 
