@@ -14,7 +14,7 @@
 #  Enable replication from master. Default: false
 #
 # [*slave_of_port*]
-#  Master port. Default: same as slave port
+#  Master port. Default: same as instance name
 #
 # [*slave_priority*]
 #  Slave priority. Default: 100
@@ -37,7 +37,7 @@ define redis::instance (
   $bind_local     = false,
   $port           = $name,
   $slave_of       = false,
-  $slave_of_port  = $port,
+  $slave_of_port  = $name,
   $slave_priority = '100',
 ) {
 

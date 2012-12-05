@@ -21,7 +21,7 @@ Manages Redis instance.
 
 **slave_of** — Enable replication from master. Default: false
 
-**slave_of_port** — Master port. Default: same as slave port
+**slave_of_port** — Master port. Default: same as instance name
 
 **slave_priority** — Slave priority. Default: 100
 
