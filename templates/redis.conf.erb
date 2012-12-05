@@ -18,16 +18,16 @@ daemonize yes
 
 # When running daemonized, Redis writes a pid file in /var/run/redis.pid by
 # default. You can specify a custom pid file location here.
-pidfile /var/run/redis/redis-server.pid
+pidfile /var/run/redis/redis-<%= name %>.pid
 
 # Accept connections on the specified port, default is 6379.
 # If port 0 is specified Redis will not listen on a TCP socket.
-port 6379
+port <%= port %>
 
 # If you want you can bind a single interface, if the bind option is not
 # specified all the interfaces will listen for incoming connections.
 #
-<% if scope.lookupvar('redis::bind_local') -%>
+<% if bind_local -%>
 bind 127.0.0.1
 <% else -%>
 bind 0.0.0.0
@@ -54,7 +54,7 @@ loglevel notice
 # Specify the log file name. Also 'stdout' can be used to force
 # Redis to log on the standard output. Note that if you use standard
 # output for logging but daemonize, logs will be sent to /dev/null
-logfile /var/log/redis/redis-server.log
+logfile /var/log/redis/redis-<%= name %>.log
 
 # To enable logging to the system logger, just set 'syslog-enabled' to yes,
 # and optionally update the other syslog parameters to suit your needs.
@@ -138,7 +138,7 @@ dbfilename dump.rdb
 # Also the Append Only File will be created inside this directory.
 #
 # Note that you must specify a directory here, not a file name.
-dir /var/lib/redis
+dir /var/lib/redis-<%= name %>
 
 ################################# REPLICATION #################################
 
@@ -147,8 +147,8 @@ dir /var/lib/redis
 # so for example it is possible to configure the slave to save the DB with a
 # different interval, or to listen to another port, and so on.
 #
-<% if scope.lookupvar('redis::slave_of') -%>
-slaveof <%= scope.lookupvar('redis::slave_of') %> 6379
+<% if slave_of -%>
+slaveof <%= slave_of %> <%= slave_of_port %>
 <% end -%>
 
 # If the master is password protected (using the "requirepass" configuration
@@ -215,7 +215,7 @@ slave-read-only yes
 # Redis Sentinel for promotion.
 #
 # By default the priority is 100.
-slave-priority <%= scope.lookupvar('redis::slave_priority') %>
+slave-priority <%= slave_priority %>
 
 ################################## SECURITY ###################################
 

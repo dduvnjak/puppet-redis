@@ -1,0 +1,19 @@
+#/etc/init/redis-<%= name %>.conf
+
+description "Redis <%= name %>"
+
+limit nofile 20000 65000
+
+start on (local-filesystems and net-device-up IFACE=eth0)
+stop on shutdown
+
+respawn
+
+expect fork
+
+pre-start script
+  mkdir -p /var/run/redis /var/lib/redis-<%= name %>
+  chown redis:redis /var/run/redis /var/lib/redis-<%= name %>
+end script
+
+exec start-stop-daemon --start --chuid redis:redis --pidfile /var/run/redis/redis-<%= name %>.pid --umask 007 --exec /usr/bin/redis-server -- /etc/redis/redis-<%= name %>.conf

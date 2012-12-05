@@ -1,18 +1,10 @@
 class redis::config {
 
-  service { 'redis-server':
-    ensure     => running,
-    enable     => true,
-    hasrestart => true,
-  }
+  Class['redis::config'] -> Redis::Instance <| |>
 
-  file { '/etc/redis/redis.conf':
-    ensure  => present,
-    mode    => '0644',
-    owner   => 'root',
-    group   => 'root',
-    content => template('redis/redis.conf.erb'),
-    notify  => Service['redis-server'],
+  exec { 'redis_cleanup':
+    command => 'stop redis-server; rm -rf /etc/init/redis-server.conf /etc/redis/redis.conf /var/log/redis/redis.log /var/lib/redis',
+    onlyif  => 'test -f /etc/init/redis-server.conf',
   }
 
 }
